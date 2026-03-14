@@ -5,7 +5,5 @@ scikit-learn
 scipy
 pandas
 numpy
-torch
-transformers
 gunicorn
 nltk
