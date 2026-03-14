@@ -353,4 +353,6 @@ def stream_batch():
 
 
 if __name__ == '__main__':
-    app.run(debug=False, host='0.0.0.0', port=8888, threaded=True)
+    # Use the port assigned by the hosting provider (Render, Heroku, etc.)
+    port = int(os.environ.get('PORT', 8888))
+    app.run(debug=False, host='0.0.0.0', port=port, threaded=True)
