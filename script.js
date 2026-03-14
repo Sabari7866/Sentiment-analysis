@@ -28,9 +28,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const manualInput = document.getElementById('manualInput');
     const liveInput = document.getElementById('liveInput');
 
-    const API_URL = 'http://127.0.0.1:8888/predict';
-    const FETCH_URL = 'http://127.0.0.1:8888/fetch_live';
-    const DATASET_URL = 'http://127.0.0.1:8888/dataset';
+    const API_URL = '/predict';
+    const FETCH_URL = '/fetch_live';
+    const DATASET_URL = '/dataset';
 
     // 📂 Load Dataset Samples on Start
     async function loadDatasetSamples() {
@@ -305,10 +305,10 @@ document.addEventListener('DOMContentLoaded', () => {
 // REAL-TIME TWEET STREAM ENGINE — Dashboard Integration
 // Connects SSE stream → drives Main Dashboard (charts, emotions, Intel)
 // ═══════════════════════════════════════════════════════════════════
-const STREAM_URL = 'http://127.0.0.1:8888/stream';
-const BATCH_URL  = 'http://127.0.0.1:8888/stream/batch';
-const STATUS_URL = 'http://127.0.0.1:8888/stream/status';
-const API_PREDICT = 'http://127.0.0.1:8888/predict';
+const STREAM_URL = '/stream';
+const BATCH_URL  = '/stream/batch';
+const STATUS_URL = '/stream/status';
+const API_PREDICT = '/predict';
 
 // ── Stream state ────────────────────────────────
 let streamSource     = null;
