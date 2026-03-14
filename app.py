@@ -24,8 +24,20 @@ import time
 REVIEW_HISTORY = []
 
 # Start the real-time streaming orchestrator
-print("🌊 Starting Tweet Stream Orchestrator...")
-orchestrator.start()
+# Only start if NOT running in a serverless environment (where threads are restricted)
+if not os.environ.get('VERCEL'):
+    try:
+        print("🌊 Starting Tweet Stream Orchestrator...")
+        orchestrator.start()
+    except Exception as e:
+        print(f"⚠️ Could not start orchestrator: {e}")
+
+try:
+    import nltk
+    nltk.download('punkt', quiet=True)
+    nltk.download('punkt_tab', quiet=True)
+except Exception:
+    pass
 
 # Optional BERT import (only load if requested or available)
 try:
@@ -272,10 +284,17 @@ def fetch_live():
 
 @app.route('/dataset', methods=['GET'])
 def get_dataset():
-    df = pd.read_csv('dataset/train.csv', header=None, names=['id', 'sentiment', 'tweet'])
-    pos = df[df['sentiment'] == 1].sample(5).to_dict('records')
-    neg = df[df['sentiment'] == 0].sample(5).to_dict('records')
-    return jsonify({"positive": pos, "negative": neg})
+    try:
+        csv_path = 'dataset/train.csv'
+        if not os.path.exists(csv_path):
+            return jsonify({"positive": [], "negative": []})
+        df = pd.read_csv(csv_path, header=None, names=['id', 'sentiment', 'tweet'])
+        pos = df[df['sentiment'] == 1].sample(5).to_dict('records')
+        neg = df[df['sentiment'] == 0].sample(5).to_dict('records')
+        return jsonify({"positive": pos, "negative": neg})
+    except Exception as e:
+        print(f"Dataset error: {e}")
+        return jsonify({"positive": [], "negative": []})
 
 
 # ── Real-time stream endpoint (Server-Sent Events) ──────────────────
