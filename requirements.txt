@@ -1,0 +1,9 @@
+Flask
+Flask-CORS
+vaderSentiment
+scikit-learn
+scipy
+pandas
+numpy
+torch
+transformers
