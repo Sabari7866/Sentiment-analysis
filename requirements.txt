@@ -10,3 +10,5 @@ nltk
 tweepy
 beautifulsoup4
 lxml
+transformers
+torch

@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, Response, stream_with_context
+from flask import Flask, request, jsonify, Response, stream_with_context, send_from_directory
 from flask_cors import CORS
 import sys
 import os
@@ -46,7 +46,7 @@ try:
 except ImportError:
     HAS_BERT = False
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='.', static_url_path='')
 CORS(app, resources={r"/*": {"origins": "*"}})
 
 print("🔍 Loading Ensemble Components...")
@@ -256,7 +256,7 @@ def predict():
 
 @app.route('/', methods=['GET'])
 def health():
-    return "MoodPulse API ACTIVE", 200
+    return send_from_directory('.', 'index.html')
 
 @app.route('/fetch_live', methods=['POST'])
 def fetch_live():
